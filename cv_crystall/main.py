@@ -20,7 +20,10 @@ def process_image(img_path, technique, args):
         ]
     else:
         imgs = [apply_technique_image(img_path, technique, args)]
-    ans_img = postprocessor.apply(imgs, img_path)
+    if 'postprocess' not in args or args['postprocess'] == 1:
+        ans_img = postprocessor.apply(imgs, img_path)
+    else:
+        ans_img = postprocessor.apply_without_processing(imgs, img_path)
     return ans_img
 
 
@@ -72,6 +75,8 @@ def windowed_mode(img_path, technique, args):
         cv2.setTrackbarPos('sensitivity_level', window_name, args['sensitivity_level'])
         cv2.createTrackbar('Proceed', window_name, 0, 1, do_image)
         cv2.createTrackbar('Save', window_name, 0, 1, do_save)
+        cv2.createTrackbar('postprocess', window_name, 0, 1, nothing)
+        cv2.setTrackbarPos('postprocess', window_name, args['postprocess'])
         scaled_img = cv2.resize(img, (40, img.shape[0]*40//img.shape[0]))
         cv2.imshow(window_name, scaled_img)
         Args.img_path = img_path
@@ -98,7 +103,8 @@ def get_args_from_window():
         'defect_size': cv2.getTrackbarPos('defect_size', window_name),
         'sensitivity_multiplier': cv2.getTrackbarPos('sensitivity_multiplier', window_name),
         'sensitivity_level': cv2.getTrackbarPos('sensitivity_level', window_name),
-        'pic_mode': False
+        'pic_mode': False,
+        'postprocess': cv2.getTrackbarPos('postprocess', window_name),
     }
     return args
 

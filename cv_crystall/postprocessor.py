@@ -23,7 +23,7 @@ def get_defects(imgs, img_to_draw):
         ind_technique += 1
         avg_list.sort()
         for avg in avg_list:
-            if avg[0] > avg_list[int(len(avg_list)*0.98)][0]:
+            if avg[0] > avg_list[int(len(avg_list)*0.90)][0]:
                 cv2.rectangle(ans_img, (avg[1] - radius, avg[2] - radius),
                               (avg[1] + radius, avg[2] + radius),
                               (0, 0, 255), -1)
@@ -36,5 +36,18 @@ def apply(imgs, img_path):
         print('Image not found.')
         return
     circled_defects = get_defects(imgs, img)
-    ans_img = cv2.addWeighted(circled_defects, 0.4, cv2.filter2D(img, -1, circular_bluring_kernel(3) * 8), 1, 1.4)
+    img = cv2.filter2D(img, -1, circular_bluring_kernel(3) * 8)
+    ans_img = cv2.addWeighted(circled_defects, 0.4, img, 1, 1.4)
+    cv2.imwrite('input_image.jpg', img)
     return ans_img
+
+
+def apply_without_processing(imgs, img_path):
+    img = cv2.imread(img_path)
+    img = cv2.filter2D(img, -1, circular_bluring_kernel(3) * 8)
+    if img is None:
+        print('Image not found.')
+        return
+    for img_ in imgs:
+        img = cv2.addWeighted(img, 1, img_, 0.4, 1.4)
+    return img
