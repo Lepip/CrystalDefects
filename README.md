@@ -35,7 +35,7 @@ The value used is divided by 10 due to discrete sliders.
 and what isn't a defect. The deviation is scaled from 0 to 1 and raised in power of (sens_lvl/10). For example, if the sensitivity lvl is at 2, it's quadratic. 
 If it's one, it is linear. The value used is divided by 10 due to discrete sliders.
 - ``Proceed``: If set to 1 starts the algorithm with set parameters.
-- ``Save``: If set to 1 saves the image displayed below the sliders.
+- ``Save``: If set to 1 saves the image displayed below the sliders in the current running derictory (in real resolution, not the distorted one).
 - ``postprocess``: If set to 1 applies postprocessor to the detected defects when proceeded, 
 otherwise doesn't.
 
@@ -46,4 +46,4 @@ import cv_crystall
 cv_crystall.process_image('path_to_your_image', args)
 ```
 Where ``args`` is a dictionary of arguments (similar to described above, the exact description right 
-now is in ``cv_crystall\sobel_technique.py``)
+now is in ``cv_crystall\sobel_technique.py``).
