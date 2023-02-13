@@ -24,8 +24,8 @@ def create_args(args):
         args['sensitivity_multiplier'] = 1
     if 'sensitivity_level' not in args:
         args['sensitivity_level'] = 2
-        if 'postprocess' not in args:
-            args['postprocess'] = 1
+    if 'postprocess' not in args:
+        args['postprocess'] = 1
     return args
 
 
