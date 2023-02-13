@@ -1,7 +1,4 @@
 import cv2.cv2 as cv2
-from cv2 import cv2
-import numpy as np
-from tqdm import tqdm
 from enum import Enum
 from . import sobel_technique
 from . import postprocessor
@@ -69,10 +66,10 @@ def windowed_mode(img_path, technique, args):
         cv2.setTrackbarPos("corner_crop", window_name, args["corner_crop"])
         cv2.createTrackbar('defect_size', window_name, 0, 15, nothing)
         cv2.setTrackbarPos('defect_size', window_name, args['defect_size'])
-        cv2.createTrackbar('sensitivity_multiplier', window_name, 1, 20, nothing)
-        cv2.setTrackbarPos('sensitivity_multiplier', window_name, args['sensitivity_multiplier'])
-        cv2.createTrackbar('sensitivity_level', window_name, 1, 5, nothing)
-        cv2.setTrackbarPos('sensitivity_level', window_name, args['sensitivity_level'])
+        cv2.createTrackbar('sens_mult', window_name, 1, 200, nothing)
+        cv2.setTrackbarPos('sens_mult', window_name, args['sensitivity_multiplier']*10)
+        cv2.createTrackbar('sens_lvl', window_name, 1, 50, nothing)
+        cv2.setTrackbarPos('sens_lvl', window_name, args['sensitivity_level']*10)
         cv2.createTrackbar('Proceed', window_name, 0, 1, do_image)
         cv2.createTrackbar('Save', window_name, 0, 1, do_save)
         cv2.createTrackbar('postprocess', window_name, 0, 1, nothing)
@@ -101,8 +98,8 @@ def get_args_from_window():
         "border_crop": cv2.getTrackbarPos("border_crop", window_name),
         "corner_crop": cv2.getTrackbarPos("corner_crop", window_name),
         'defect_size': cv2.getTrackbarPos('defect_size', window_name),
-        'sensitivity_multiplier': cv2.getTrackbarPos('sensitivity_multiplier', window_name),
-        'sensitivity_level': cv2.getTrackbarPos('sensitivity_level', window_name),
+        'sensitivity_multiplier': cv2.getTrackbarPos('sens_mult', window_name)/10,
+        'sensitivity_level': cv2.getTrackbarPos('sens_lvl', window_name)/10,
         'pic_mode': False,
         'postprocess': cv2.getTrackbarPos('postprocess', window_name),
     }
